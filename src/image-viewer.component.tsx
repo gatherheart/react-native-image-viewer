@@ -13,7 +13,8 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  ViewStyle
+  ViewStyle,
+  Easing
 } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 import styles from './image-viewer.style';
@@ -70,7 +71,8 @@ export default class ImageViewer extends React.Component<Props, State> {
       Animated.timing(this.fadeAnim, {
         toValue: 1,
         duration: 200,
-        useNativeDriver: !!this.props.useNativeDriver
+        useNativeDriver: !!this.props.useNativeDriver,
+        easing: Easing.linear
       }).start();
     }
   }
@@ -87,7 +89,7 @@ export default class ImageViewer extends React.Component<Props, State> {
 
     // 给 imageSizes 塞入空数组
     const imageSizes: IImageSize[] = [];
-    nextProps.imageUrls.forEach(imageUrl => {
+    nextProps.imageUrls.forEach((imageUrl) => {
       imageSizes.push({
         width: imageUrl.width || 0,
         height: imageUrl.height || 0,
@@ -111,7 +113,8 @@ export default class ImageViewer extends React.Component<Props, State> {
         Animated.timing(this.fadeAnim, {
           toValue: 1,
           duration: 200,
-          useNativeDriver: !!nextProps.useNativeDriver
+          useNativeDriver: !!nextProps.useNativeDriver,
+          easing: Easing.linear
         }).start();
       }
     );
@@ -307,7 +310,8 @@ export default class ImageViewer extends React.Component<Props, State> {
     Animated.timing(this.positionX, {
       toValue: this.positionXNumber,
       duration: this.props.pageAnimateTime,
-      useNativeDriver: !!this.props.useNativeDriver
+      useNativeDriver: !!this.props.useNativeDriver,
+      easing: Easing.ease
     }).start();
 
     const nextIndex = (this.state.currentShowIndex || 0) - 1;
@@ -341,7 +345,8 @@ export default class ImageViewer extends React.Component<Props, State> {
     Animated.timing(this.positionX, {
       toValue: this.positionXNumber,
       duration: this.props.pageAnimateTime,
-      useNativeDriver: !!this.props.useNativeDriver
+      useNativeDriver: !!this.props.useNativeDriver,
+      easing: Easing.ease
     }).start();
 
     const nextIndex = (this.state.currentShowIndex || 0) + 1;
@@ -538,7 +543,7 @@ export default class ImageViewer extends React.Component<Props, State> {
           return (
             <ImageZoom
               key={index}
-              ref={el => (this.imageRefs[index] = el)}
+              ref={(el) => (this.imageRefs[index] = el)}
               cropWidth={this.width}
               cropHeight={this.height}
               maxOverflow={this.props.maxOverflow}
