@@ -311,7 +311,7 @@ export default class ImageViewer extends React.Component<Props, State> {
       toValue: this.positionXNumber,
       duration: this.props.pageAnimateTime,
       useNativeDriver: !!this.props.useNativeDriver,
-      easing: Easing.ease
+      easing: Easing.linear
     }).start();
 
     const nextIndex = (this.state.currentShowIndex || 0) - 1;
@@ -346,7 +346,7 @@ export default class ImageViewer extends React.Component<Props, State> {
       toValue: this.positionXNumber,
       duration: this.props.pageAnimateTime,
       useNativeDriver: !!this.props.useNativeDriver,
-      easing: Easing.ease
+      easing: Easing.linear
     }).start();
 
     const nextIndex = (this.state.currentShowIndex || 0) + 1;
