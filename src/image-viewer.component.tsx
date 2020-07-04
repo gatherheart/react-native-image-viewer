@@ -299,13 +299,15 @@ export default class ImageViewer extends React.Component<Props, State> {
   public goBack = () => {
     if (this.state.currentShowIndex === 0) {
       // 回到之前的位置
+      // When exceeding the first page
       this.resetPosition.call(this);
       return;
     }
+    const _interval = this.state.currentShowIndex === 1 ? this.props.interval : 0;
 
     this.positionXNumber = !I18nManager.isRTL
-      ? this.standardPositionX + this.width
-      : this.standardPositionX - this.width;
+      ? this.standardPositionX + this.width + (_interval || 0)
+      : this.standardPositionX - this.width - (_interval || 0);
     this.standardPositionX = this.positionXNumber;
     Animated.timing(this.positionX, {
       toValue: this.positionXNumber,
@@ -334,13 +336,15 @@ export default class ImageViewer extends React.Component<Props, State> {
   public goNext = () => {
     if (this.state.currentShowIndex === this.props.imageUrls.length - 1) {
       // 回到之前的位置
+      // When exceeding the last page
       this.resetPosition.call(this);
       return;
     }
+    const _interval = this.state.currentShowIndex === 0 ? this.props.interval : 0;
 
     this.positionXNumber = !I18nManager.isRTL
-      ? this.standardPositionX - this.width
-      : this.standardPositionX + this.width;
+      ? this.standardPositionX - this.width - (_interval || 0)
+      : this.standardPositionX + this.width + (_interval || 0);
     this.standardPositionX = this.positionXNumber;
     Animated.timing(this.positionX, {
       toValue: this.positionXNumber,
@@ -544,7 +548,7 @@ export default class ImageViewer extends React.Component<Props, State> {
             <ImageZoom
               key={index}
               ref={(el) => (this.imageRefs[index] = el)}
-              cropWidth={this.width}
+              cropWidth={this.width + (this.props.interval || 0)}
               cropHeight={this.height}
               maxOverflow={this.props.maxOverflow}
               horizontalOuterRangeOffset={this.handleHorizontalOuterRangeOffset}
@@ -564,6 +568,7 @@ export default class ImageViewer extends React.Component<Props, State> {
               doubleClickInterval={this.props.doubleClickInterval}
               minScale={this.props.minScale}
               maxScale={this.props.maxScale}
+              style={{ alignItems: 'flex-start' }}
             >
               {this!.props!.renderImage!(image.props)}
             </ImageZoom>
