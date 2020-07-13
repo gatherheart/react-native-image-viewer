@@ -115,6 +115,7 @@ export default class Main extends Component {
           enableSwipeDown={false}
           enablePreload={true}
           interval={20}
+          index={3}
           loadingRender={() => {
             return (
               <ActivityIndicator
